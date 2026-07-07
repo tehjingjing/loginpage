@@ -1,0 +1,14 @@
+services:
+  php-cookies-sessions:
+    build: .
+    container_name: php-cookies-sessions
+    ports:
+      - "8000:8000"
+    volumes:
+      # Bind mount so edits to src/*.php are reflected instantly without rebuilding
+      - ./src:/var/www/html
+      - session-data:/var/lib/php/sessions
+    restart: unless-stopped
+
+volumes:
+  session-data:
