@@ -35,8 +35,7 @@ Then open **http://localhost:8000** in your browser.
 
 On successful login, the app sets a plain cookie called `last_login` containing the timestamp of that login, with a 30-day expiry — independent of the PHP session. The dashboard reads this cookie back and shows the *previous* login time ("Last visited"). A second cookie, `remembered_username`, optionally pre-fills the username field on the login form (never the password).
 
-This data belongs in a cookie rather than the session because it needs to **outlive** any single session. A PHP session physically lives on the server's disk (or memory) and is only linked to the browser by the short-lived `PHPSESSID` cookie; once the user logs out or the session expires, that server-side data is destroyed. "Last visited" and "remembered username," by contrast, are meant to survive logout, browser restarts, and even brand-new sessions — so they must be stored client-side, in the browser itself, which is exactly what a plain cookie does. Session data is the right place for "is this specific browser currently authenticated," while a cookie is the right place for "what should this browser remember about me over time."
-
+This data belongs in a cookie rather than the session because cookies are stored locally on the client’s browser with an explicit expiration date, they can keep working even after the browser is completely closed and reopened. This kind of data belongs in a cookie instead of a session because sessions are short-lived and automatically destroy their data as soon as the browser tab is closed. By using cookie here, the applications allow visitors to keep their customized preferences without adding unnecessary overhead or persistent storage state requirements onto the server side. 
 
 ## 5. Stretch goals attempted
 
